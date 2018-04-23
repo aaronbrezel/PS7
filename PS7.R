@@ -29,6 +29,13 @@ cleanCrimeStats <- crimeStats %>%
                     x = x
                   }
                   }))%>%
+                  mutate(cleanDescpt, cleanDescpt = sapply(cleanDescpt, function(x){ #Simplifies all the different types of assaults to just "ASSAULT". I know the grepl pattern is funny
+                  if(grepl("DESTRUC PROPERTY",x) == 1){
+                    x = "DESTRUCTION OF PROPERTY"
+                  }else{
+                    x = x
+                  }
+                  }))%>%
                   filter(substr(as.character(DateOccur), start = 1, stop = 2) == "03") %>% #limits month to march. There are some odd januaries and februaries in there
                   mutate(DateOccur, cleanDay = sapply(DateOccur, function(x){
                   strsplit(as.character(x), "[//]")[[1]][2]
@@ -58,34 +65,9 @@ mostCrimeByNeighborhood <- cleanCrimeStats %>%
 #Neighborhood 35 had the largest amount of crime in March with 294 incidents
   
   
-                    
-select(typeCrimePerDay, )
-  ?select
-  
-typeCrimePerDay
-summarise
+unique(cleanCrimeStats$cleanDescpt) #Of the 29 seeminly unique crimes, "ROBBERY," "ROBBERY CARJACKING,"
+                                    #"BURGLARY," "LARCENY," "AUTO THEFT," "STLG BY DECEIT," "FAILURE TO RETURN BORROWED," 
+                                    #"EMBEZZLEMENT" and "STOLEN PROPERTY" are what I would consider "crime related to robbery" 
 
 
 
-
-
-                    
-test <- typeCrimePerDay$cleanDescpt
-class(test)
-test
-test <- sapply(test, function(x){
-  if(grepl("ASS", x) == 1){
-    x = "ASSAULT"
-  }
-  else{
-    x = x
-  }
-})
-
-class(test)
-test[1]
-if(grepl("ASS", test[1]) == 1){
-  test[1] <- "ASSAULT"
-}
-test
-?vapply
