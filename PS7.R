@@ -45,8 +45,17 @@ mostCommonCrime <- cleanCrimeStats %>%
                   summarise(count = n())
   
 #The most common crime in March was Larceny with 894 counts 
-  
-  
+
+#groups the cleaned stats to figure out the number of crimes per day in each neighborhood
+crimePerDayByNeighborhood <- cleanCrimeStats %>%
+                            group_by(Neighborhood, cleanDay) %>%
+                            summarise(count = n())
+
+#groups the cleaned stats to determine the sum of crime in each neighborhood  
+mostCrimeByNeighborhood <- cleanCrimeStats %>%
+                        group_by(Neighborhood) %>%
+                        summarise(count = n())
+#Neighborhood 35 had the largest amount of crime in March with 294 incidents
   
   
                     
