@@ -64,10 +64,19 @@ mostCrimeByNeighborhood <- cleanCrimeStats %>%
                         summarise(count = n())
 #Neighborhood 35 had the largest amount of crime in March with 294 incidents
   
-  
+#All Robbery related crimes have a Crime ID starting with 3
+
+crimeByDistrict <- cleanCrimeStats %>% 
+                    group_by(District) %>%
+                    summarise(count = n())
+#proportion of crime related to rovery by district. District 5 have the largest proportion of crime related to robbery. 
+robberyCrimeByDistrict <- cleanCrimeStats %>%
+                          filter(Crime > 29999 & Crime < 40000) %>%
+                          group_by(District) %>%
+                          summarise(count = n()) %>%
+                          mutate(count, propotionOfTotalCrime = count/crimeByDistrict$count[2:7])
+
+
 unique(cleanCrimeStats$cleanDescpt) #Of the 29 seeminly unique crimes, "ROBBERY," "ROBBERY CARJACKING,"
-                                    #"BURGLARY," "LARCENY," "AUTO THEFT," "STLG BY DECEIT," "FAILURE TO RETURN BORROWED," 
-                                    #"EMBEZZLEMENT" and "STOLEN PROPERTY" are what I would consider "crime related to robbery" 
-
-
-
+#"BURGLARY," "LARCENY," "AUTO THEFT," "STLG BY DECEIT," "FAILURE TO RETURN BORROWED," 
+#"EMBEZZLEMENT" and "STOLEN PROPERTY" are what I would consider "crime related to robbery" 
